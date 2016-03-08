@@ -33,8 +33,21 @@ function healthProgress(status, base) {
     if (width >= 100) {
         heroElement.style.width;
     } else {
-        width = ((status/base)*100);
+
+        width = Math.floor(((status/base)*100));
+        console.log('heroinfo', status)
+        console.log('heroinfo', base)
+        console.log(width)
         heroElement.style.width = width + '%';
+        if (width <= 50 && width >= 20){
+          heroElement.style.background = "yellow";
+        }
+        if (width < 20){
+          heroElement.style.background = "red";
+        }
+        if (width <= 0){
+          heroElement.style.background = "grey";
+        }
     }
 }
 
@@ -42,9 +55,20 @@ function enemyHealthProgress(status, base) {
     if (width >= 100) {
         enemyElement.style.width;
     } else {
-        width = ((status/base)*100);
+        width = Math.floor(((status/base)*100));
+        console.log('enemyinfo', status)
+        console.log('enemyinfo', base)
+        console.log(width)
         enemyElement.style.width = width + '%';
-
+        if (width <= 50 && width >= 20){
+          enemyElement.style.background = "yellow";
+        }
+        if (width < 20){
+          enemyElement.style.background = "red";
+        }
+        if (width <= 0){
+          enemyElement.style.background = "grey";
+        }
     }
 }
 
@@ -106,29 +130,31 @@ function missedTurn(){
                             //ATTACK FUNCTIONS//
 //////////////////////////////////////////////////////////////////////////////////////
 function johnnyAttack(){
-
-  x = Math.floor((Math.random() * 3) + 1);
-  accuracySelect = x + mainCharacter.accuracy;
-  z = Math.floor((Math.random() * 70) + 1);
-  if (z >= 10 && z <= 14){
-      $(".hero-button").append('<button class="attack" id="hammer">Hammer Attack</button>');
-  }
-
-  if (accuracySelect < enemyCharacter.evasion){
-    missedTurn();
-  } else {
-    // johnnyAudio.play();
-     barbHealthStatus = mainCharacter.attack(enemyCharacter);
+    x = Math.floor((Math.random() * 3) + 1);
+    accuracySelect = x + mainCharacter.accuracy;
+    z = Math.floor((Math.random() * 70) + 1);
+    if (z >= 10 && z <= 14){
+        $(".hero-button").append('<button class="attack" id="hammer">Hammer Attack</button>');
     }
-  enemyCharacterAttack();
-  enemyHealthProgress(barbHealthStatus, barbBaseHealth);
 
-   $("#hammer").on('click', function(){
-     barbHealthStatus = mainCharacter.hammerAttack(enemyCharacter);
-     enemyHealthProgress(barbHealthStatus, barbBaseHealth);
+    if (accuracySelect < enemyCharacter.evasion){
+      missedTurn();
+    } else {
+      // johnnyAudio.play();
+       barbHealthStatus = mainCharacter.attack(enemyCharacter);
+      }
+    setTimeout(function(){
+      enemyCharacterAttack();
+    }, 2000)
+    enemyHealthProgress(barbHealthStatus, barbBaseHealth);
 
-     (this).remove();
-   })
+     $("#hammer").on('click', function(){
+       barbHealthStatus = mainCharacter.hammerAttack(enemyCharacter);
+       enemyHealthProgress(barbHealthStatus, barbBaseHealth);
+
+       (this).remove();
+     })
+
 
 }//end of johnnyAttack
 
@@ -148,7 +174,9 @@ function kangAttack(e){
   } else {
     barbHealthStatus = mainCharacter.attack(enemyCharacter);
   }
-  enemyCharacterAttack();
+  setTimeout(function(){
+    enemyCharacterAttack();
+  }, 2000)
   enemyHealthProgress(barbHealthStatus, barbBaseHealth);
 
    $("#slash").on('click', function(){
@@ -175,10 +203,11 @@ function lightningAttack(e){
     barbHealthStatus = mainCharacter.attack(enemyCharacter);
 
   }
-  enemyCharacterAttack();
+  setTimeout(function(){
+    enemyCharacterAttack();
+  }, 2000)
   enemyHealthProgress(barbHealthStatus, barbBaseHealth);
 
-  // healthProgress(barbHealthStatus, barbBaseHealth);
 
   $("#lightning").on('click', function(){
     barbHealthStatus = mainCharacter.lightning(enemyCharacter);
@@ -254,7 +283,7 @@ $("#johnny").click(function(){
   selected = mainCharacter;
 
   $(".hero-buttons").empty();   //jquery empty buttons
-  $(".hero-buttons").append('<button class="attack">Attack</button>');
+  $(".fight").append('<button class="attack">FIGHT</button>');
   // barbInfoDisplay.textContent = enemyCharacter.name;
 
   $('.heroName').html(mainCharacter.name);
@@ -288,9 +317,8 @@ $("#raiden").click(function(){
 
 
   $(".hero-buttons").empty();   //jquery empty buttons
-  $(".hero-buttons").append('<button class="attack">Attack</button>');
+  $(".fight").append('<button class="attack">FIGHT</button>');
 
-  // barbInfoDisplay.textContent = enemyCharacter.health;
   heroInfoDisplay.textContent = mainCharacter.health;
   $('.heroName').html(mainCharacter.name);
   $('.display1').append('<img src =' + mainCharacter.pic + '>');
@@ -324,7 +352,7 @@ $("#kang").click(function(){
 
   selected = mainCharacter;
   $(".hero-buttons").empty();   //jquery empty buttons
-  $(".hero-buttons").append('<button class="attack">Attack</button>');
+  $(".fight").append('<button class="attack">FIGHT</button>');
 
 
   $('.heroName').html(mainCharacter.name);
