@@ -26,47 +26,45 @@ var barbInfoDisplay = document.querySelector('.display2');
 var waitDisplay = document.querySelector('.waitDisplay');
 var heroElement = document.querySelector("#heroBar");
 var enemyElement = document.querySelector("#goblinBar");
-var width = 0;
+var heroWidth = 0;
+var enemyWidth = 0;
 
 
 function healthProgress(status, base) {
-    if (width >= 100) {
+    if (heroWidth >= 100) {
         heroElement.style.width;
     } else {
 
-        width = Math.floor(((status/base)*100));
-        console.log('heroinfo', status)
-        console.log('heroinfo', base)
-        console.log(width)
-        heroElement.style.width = width + '%';
-        if (width <= 50 && width >= 20){
+        heroWidth = Math.floor(((status/base)*100));
+
+        heroElement.style.width = heroWidth + '%';
+        if (heroWidth <= 50 && heroWidth >= 20){
           heroElement.style.background = "yellow";
         }
-        if (width < 20){
+        if (heroWidth < 20){
           heroElement.style.background = "red";
         }
-        if (width <= 0){
+        if (heroWidth <= 0){
           heroElement.style.background = "grey";
+          // $(".display2").html('<div class="win">' + 'You have lost' + '</div>');
         }
     }
 }
 
 function enemyHealthProgress(status, base) {
-    if (width >= 100) {
+    if (enemyWidth >= 100) {
         enemyElement.style.width;
     } else {
-        width = Math.floor(((status/base)*100));
-        console.log('enemyinfo', status)
-        console.log('enemyinfo', base)
-        console.log(width)
-        enemyElement.style.width = width + '%';
-        if (width <= 50 && width >= 20){
+        enemyWidth = Math.floor(((status/base)*100));
+
+        enemyElement.style.width = enemyWidth + '%';
+        if (enemyWidth <= 50 && enemyWidth >= 20){
           enemyElement.style.background = "yellow";
         }
-        if (width < 20){
+        if (enemyWidth < 20){
           enemyElement.style.background = "red";
         }
-        if (width <= 0){
+        if (enemyWidth <= 0){
           enemyElement.style.background = "grey";
         }
     }
@@ -122,7 +120,7 @@ Enemy.prototype = new Character();
 
 
 function missedTurn(){
-  console.log("Missed your turn");
+  console.log('You missed a turn')
 }
 
 
@@ -145,7 +143,7 @@ function johnnyAttack(){
       }
     setTimeout(function(){
       enemyCharacterAttack();
-    }, 2000)
+    }, 1000)
     enemyHealthProgress(barbHealthStatus, barbBaseHealth);
 
      $("#hammer").on('click', function(){
@@ -176,7 +174,7 @@ function kangAttack(e){
   }
   setTimeout(function(){
     enemyCharacterAttack();
-  }, 2000)
+  }, 1000)
   enemyHealthProgress(barbHealthStatus, barbBaseHealth);
 
    $("#slash").on('click', function(){
@@ -205,7 +203,7 @@ function lightningAttack(e){
   }
   setTimeout(function(){
     enemyCharacterAttack();
-  }, 2000)
+  }, 1000)
   enemyHealthProgress(barbHealthStatus, barbBaseHealth);
 
 
@@ -225,7 +223,7 @@ function enemyCharacterAttack(){
     barbaccuracySelect = y + mainCharacter.accuracy;
 
     if (barbaccuracySelect < mainCharacter.evasion){
-      console.log("barbarian missed");
+      missedTurn();
     } else {
       heroHealthStatus = enemyCharacter.attack(selected);
       healthProgress(heroHealthStatus, heroBaseHealth);

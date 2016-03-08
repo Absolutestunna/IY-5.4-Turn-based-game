@@ -5825,7 +5825,7 @@ body {
   height: 800px;
   width: 100%;
   background-color: #5B5A58;
-  opacity: .5; }
+  opacity: .28; }
 
 .name {
   font-size: 30px;
@@ -5890,7 +5890,7 @@ body {
 .fight {
   position: relative;
   left: 366px;
-  bottom: -58px; }
+  bottom: -109px; }
   .fight .attack {
     background-color: black;
     border: 7px solid red;
@@ -5899,5 +5899,11 @@ body {
     border-radius: 3%;
     color: red;
     font-family: 'Black Ops One', cursive; }
+
+.enemyInfo, .heroInfo {
+  height: 80px;
+  background-color: green;
+  color: white;
+  width: 100%; }
 
 /*# sourceMappingURL=app.css.map */
