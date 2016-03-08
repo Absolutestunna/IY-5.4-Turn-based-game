@@ -48,7 +48,8 @@ function healthProgress(status, base) {
         }
         if (heroWidth <= 0){
           heroElement.style.background = "grey";
-          // $(".display2").html('<div class="win">' + 'You have lost' + '</div>');
+          // $(".display2").html('<div class="lost">You have lost</div>');
+          alert('you have lost the game')
         }
     }
 }
@@ -122,7 +123,7 @@ Enemy.prototype = new Character();
 
 
 function missedTurn(){
-  console.log('You missed a turn')
+  console.log('You missed a turn');
 }
 
 
